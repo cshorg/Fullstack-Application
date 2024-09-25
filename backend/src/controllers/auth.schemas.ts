@@ -19,3 +19,4 @@ export const registerSchema = z.object({
   }
 )
 
+export const verificationCodeSchema = z.string().min(1).max(24)
