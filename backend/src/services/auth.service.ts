@@ -1,3 +1,4 @@
+import { APP_ORIGIN } from "../constants/env"
 import { CONFLICT, INTERNAL_SERVER_ERROR, NOT_FOUND, UNAUTHORIZED } from "../constants/http"
 import VerificationCodeType from "../constants/verificationCodeTypes"
 import SessionModel from "../models/session.model"
@@ -5,7 +6,9 @@ import UserModel from "../models/user.model"
 import VerificationCodeModel from "../models/verificationCode.model"
 import appAssert from "../utils/appAssert"
 import { ONE_DAY_MS, oneYearFromNow, thirtyDaysFromNow } from "../utils/date"
+import { getVerifyEmailTemplate } from "../utils/emailTemplates"
 import { RefreshTokenPayload, refreshTokenSignOptions, signToken, verifyToken } from "../utils/jwt"
+import { sendMail } from "../utils/sendMail"
 
 export type CreateAccountParams = {
   username: string,
@@ -37,6 +40,15 @@ export const createAccount = async (data: CreateAccountParams) => {
     type: VerificationCodeType.EmailVerification,
     expiresAt: oneYearFromNow(),
   });
+
+  const url = `${APP_ORIGIN}/email/verify/${verificationCode._id}`
+  // send verification email
+  const { error } = await sendMail({
+    to: user.email,
+    ...getVerifyEmailTemplate(url)
+  })
+
+  if (error) console.log(error)
 
   // create session
   const session = await SessionModel.create({
