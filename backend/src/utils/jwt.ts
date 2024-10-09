@@ -1,45 +1,46 @@
 import jwt, { VerifyOptions, SignOptions } from "jsonwebtoken";
-import { SessionDocument } from "../models/session.model"
-import { UserDocument } from "../models/user.model"
-import { JWT_REFRESH_SECRET, JWT_SECRET } from "../constants/env"
+import Audience from "../constants/audience";
+import { JWT_REFRESH_SECRET, JWT_SECRET } from "../constants/env";
+import { UserDocument } from "../models/user.model";
+import { SessionDocument } from "../models/session.model";
 
 export type RefreshTokenPayload = {
-  sessionId: SessionDocument["_id"]
-}
+  sessionId: SessionDocument["_id"];
+};
 
 export type AccessTokenPayload = {
-  userId: UserDocument["_id"]
-  sessionId: SessionDocument["_id"]
-}
+  userId: UserDocument["_id"];
+  sessionId: SessionDocument["_id"];
+};
 
 type SignOptionsAndSecret = SignOptions & {
-  secret: string
-}
+  secret: string;
+};
 
 const defaults: SignOptions = {
-  audience: ["user"]
-}
+  audience: [Audience.User],
+};
 
 const accessTokenSignOptions: SignOptionsAndSecret = {
   expiresIn: "15m",
-  secret: JWT_SECRET
-}
+  secret: JWT_SECRET,
+};
 
 export const refreshTokenSignOptions: SignOptionsAndSecret = {
   expiresIn: "30d",
-  secret: JWT_REFRESH_SECRET
-}
+  secret: JWT_REFRESH_SECRET,
+};
 
 export const signToken = (
   payload: AccessTokenPayload | RefreshTokenPayload,
-  options?: SignOptionsAndSecret,
+  options?: SignOptionsAndSecret
 ) => {
-  const { secret, ...signOpts } = options || accessTokenSignOptions
-  return jwt.sign(payload, secret,{
-    ...defaults, 
-    ...signOpts
-  })
-}
+  const { secret, ...signOpts } = options || accessTokenSignOptions;
+  return jwt.sign(payload, secret, {
+    ...defaults,
+    ...signOpts,
+  });
+};
 
 export const verifyToken = <TPayload extends object = AccessTokenPayload>(
   token: string,
