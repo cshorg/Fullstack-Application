@@ -4,11 +4,13 @@ import cors from 'cors'
 import cookieParser from "cookie-parser"
 import errorHandler from "./middleware/errorHandler"
 import connectToDatabase from './config/db'
-import { PORT, NODE_ENV, APP_ORIGIN } from "./constants/env"
-import { OK } from "./constants/http"
 import authRoutes from "./routes/auth.route"
 import authenticate from "./middleware/authenticate"
 import userRoutes from "./routes/user.route"
+import sessionRoutes from "./routes/session.route"
+
+import { PORT, NODE_ENV, APP_ORIGIN } from "./constants/env"
+import { OK } from "./constants/http"
 
 const app = express()
 
@@ -28,9 +30,12 @@ app.get("/health", (req, res, next) => {
   })
 })
 
+// auth routes
 app.use("/auth", authRoutes)
 
+// protected routes
 app.use("/user", authenticate, userRoutes)
+app.use('/sessions', authenticate, sessionRoutes)
 
 app.use(errorHandler)
 
