@@ -3,12 +3,12 @@ import { compareValue, hashValue } from "../utils/bcrypt";
 
 export interface UserDocument extends mongoose.Document {
   username: string
-  email: string
-  password: string
-  verified: boolean
-  createdAt: Date
-  updatedAt: Date
-  comparePassword(val: string): Promise<boolean>
+  email: string;
+  password: string;
+  verified: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  comparePassword(val: string): Promise<boolean>;
   omitPassword(): Pick<
   UserDocument,
   "_id" | "username" | "email" | "verified" | "createdAt" | "updatedAt" | "__v"
@@ -44,4 +44,5 @@ userSchema.methods.omitPassword = function () {
 };
 
 const UserModel = mongoose.model<UserDocument>("User", userSchema);
+
 export default UserModel;

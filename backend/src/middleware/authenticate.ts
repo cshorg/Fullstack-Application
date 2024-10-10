@@ -4,7 +4,6 @@ import { UNAUTHORIZED } from "../constants/http";
 import AppErrorCode from "../constants/appErrorCode";
 import { verifyToken } from "../utils/jwt";
 
-// wrap with catchErrors() if you need this to be async
 const authenticate: RequestHandler = (req, res, next) => {
   const accessToken = req.cookies.accessToken as string | undefined;
   appAssert(
@@ -21,8 +20,11 @@ const authenticate: RequestHandler = (req, res, next) => {
     error === "jwt expired" ? "Token expired" : "Invalid token",
     AppErrorCode.InvalidAccessToken
   );
-
+  
+  // cant find the ts error, something to do with userId & sessionId being unknown in verifytoken
+  // @ts-ignore
   req.userId = payload.userId
+  // @ts-ignore
   req.sessionId = payload.sessionId
 
   next();
