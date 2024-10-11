@@ -1,33 +1,32 @@
-import { RequestHandler } from "express";
-import appAssert from "../utils/appAssert";
-import { UNAUTHORIZED } from "../constants/http";
-import AppErrorCode from "../constants/appErrorCode";
-import { verifyToken } from "../utils/jwt";
+import { RequestHandler } from 'express'
+import appAssert from '../utils/appAssert'
+import { UNAUTHORIZED } from '../constants/http'
+import AppErrorCode from '../constants/appErrorCode'
+import { verifyToken } from '../utils/jwt'
 
 const authenticate: RequestHandler = (req, res, next) => {
-  const accessToken = req.cookies.accessToken as string | undefined;
+  const accessToken = req.cookies.accessToken as string | undefined
   appAssert(
     accessToken,
     UNAUTHORIZED,
-    "Not authorized",
+    'Not authorized',
     AppErrorCode.InvalidAccessToken
-  );
+  )
 
-  const { payload, error } = verifyToken(accessToken);
+  const { error, payload } = verifyToken(accessToken)
   appAssert(
     payload,
     UNAUTHORIZED,
-    error === "jwt expired" ? "Token expired" : "Invalid token",
+    error === 'jwt expired' ? 'Token expired' : 'Invalid token',
     AppErrorCode.InvalidAccessToken
-  );
-  
-  // cant find the ts error, something to do with userId & sessionId being unknown in verifytoken
+  )
+
+  // cant figure out how to fix the typescript error.
   // @ts-ignore
   req.userId = payload.userId
   // @ts-ignore
   req.sessionId = payload.sessionId
+  next()
+}
 
-  next();
-};
-
-export default authenticate;
+export default authenticate
