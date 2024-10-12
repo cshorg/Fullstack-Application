@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import appAssert from '../utils/appAssert'
-import { UNAUTHORIZED } from '../constants/http'
 import AppErrorCode from '../constants/appErrorCode'
+import { UNAUTHORIZED } from '../constants/http'
 import { verifyToken } from '../utils/jwt'
 
 const authenticate: RequestHandler = (req, res, next) => {
@@ -21,11 +21,9 @@ const authenticate: RequestHandler = (req, res, next) => {
     AppErrorCode.InvalidAccessToken
   )
 
-  // cant figure out how to fix the typescript error.
-  // @ts-ignore
   req.userId = payload.userId
-  // @ts-ignore
   req.sessionId = payload.sessionId
+
   next()
 }
 

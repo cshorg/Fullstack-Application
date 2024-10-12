@@ -13,14 +13,15 @@ import {
 } from '@chakra-ui/react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { login } from '../lib/api'
 
 const Login = () => {
+  const location = useLocation()
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  const navigate = useNavigate()
+  const redirectUrl = location.state?.redirectUrl || '/'
 
   const {
     mutate: signIn,
@@ -29,7 +30,7 @@ const Login = () => {
   } = useMutation({
     mutationFn: login,
     onSuccess: () => {
-      navigate('/', {
+      navigate(redirectUrl, {
         replace: true
       })
     }
@@ -57,7 +58,6 @@ const Login = () => {
                 autoFocus
               />
             </FormControl>
-
             <FormControl id='password'>
               <FormLabel>Password</FormLabel>
               <Input
@@ -76,12 +76,11 @@ const Login = () => {
               fontSize='sm'
               textAlign={{
                 base: 'center',
-                sm: 'left'
+                sm: 'right'
               }}
             >
               Forgot password?
             </ChakraLink>
-
             <Button
               my={2}
               isLoading={isPending}
@@ -90,7 +89,6 @@ const Login = () => {
             >
               Sign in
             </Button>
-
             <Text align='center' fontSize='sm' color='text.muted'>
               Don&apos;t have an account?{' '}
               <ChakraLink as={Link} to='/register'>

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import VerificationCodeType from '../constants/verificationCodeTypes'
+import VerificationCodeType from '../constants/verificationCodeType'
 
 export interface VerificationCodeDocument extends mongoose.Document {
   userId: mongoose.Types.ObjectId
@@ -25,5 +25,4 @@ const VerificationCodeModel = mongoose.model<VerificationCodeDocument>(
   verificationCodeSchema,
   'verification_codes'
 )
-
 export default VerificationCodeModel

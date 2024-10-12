@@ -1,8 +1,8 @@
+import { z } from 'zod'
 import { NOT_FOUND, OK } from '../constants/http'
 import SessionModel from '../models/session.model'
-import appAssert from '../utils/appAssert'
 import catchErrors from '../utils/catchErrors'
-import { z } from 'zod'
+import appAssert from '../utils/appAssert'
 
 export const getSessionsHandler = catchErrors(async (req, res) => {
   const sessions = await SessionModel.find(
@@ -20,8 +20,8 @@ export const getSessionsHandler = catchErrors(async (req, res) => {
     }
   )
 
-  // Mapping over each session and converting to object. Then checking if session is the current user session to add isCurrent to object.
   return res.status(OK).json(
+    // mark the current session
     sessions.map((session) => ({
       ...session.toObject(),
       ...(session.id === req.sessionId && {
@@ -38,6 +38,5 @@ export const deleteSessionHandler = catchErrors(async (req, res) => {
     userId: req.userId
   })
   appAssert(deleted, NOT_FOUND, 'Session not found')
-
   return res.status(OK).json({ message: 'Session removed' })
 })

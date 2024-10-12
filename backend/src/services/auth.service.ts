@@ -1,4 +1,3 @@
-import { fiveMinutesAgo, oneHourFromNow } from './../utils/date'
 import { APP_ORIGIN } from '../constants/env'
 import {
   CONFLICT,
@@ -7,12 +6,19 @@ import {
   TOO_MANY_REQUESTS,
   UNAUTHORIZED
 } from '../constants/http'
-import VerificationCodeType from '../constants/verificationCodeTypes'
+import VerificationCodeType from '../constants/verificationCodeType'
 import SessionModel from '../models/session.model'
 import UserModel from '../models/user.model'
 import VerificationCodeModel from '../models/verificationCode.model'
 import appAssert from '../utils/appAssert'
-import { ONE_DAY_MS, oneYearFromNow, thirtyDaysFromNow } from '../utils/date'
+import { hashValue } from '../utils/bcrypt'
+import {
+  ONE_DAY_MS,
+  fiveMinutesAgo,
+  oneHourFromNow,
+  oneYearFromNow,
+  thirtyDaysFromNow
+} from '../utils/date'
 import {
   getPasswordResetTemplate,
   getVerifyEmailTemplate
@@ -24,16 +30,14 @@ import {
   verifyToken
 } from '../utils/jwt'
 import { sendMail } from '../utils/sendMail'
-import { hashValue } from '../utils/bcrypt'
 
 type CreateAccountParams = {
   email: string
   password: string
   userAgent?: string
 }
-
 export const createAccount = async (data: CreateAccountParams) => {
-  // verify email
+  // verify email is not taken
   const existingUser = await UserModel.exists({
     email: data.email
   })
@@ -89,7 +93,6 @@ type LoginParams = {
   password: string
   userAgent?: string
 }
-
 export const loginUser = async ({
   email,
   password,
@@ -262,7 +265,6 @@ export const resetPassword = async ({
 
   await validCode.deleteOne()
 
-  // delete all sessions
   await SessionModel.deleteMany({ userId: validCode.userId })
 
   return { user: updatedUser.omitPassword() }

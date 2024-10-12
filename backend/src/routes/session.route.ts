@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import {
-  getSessionsHandler,
-  deleteSessionHandler
+  deleteSessionHandler,
+  getSessionsHandler
 } from '../controllers/session.controller'
 
 const sessionRoutes = Router()
 
-// prefix /sessions
+// prefix: /sessions
 sessionRoutes.get('/', getSessionsHandler)
 sessionRoutes.delete('/:id', deleteSessionHandler)
 
