@@ -14,7 +14,6 @@ const useDeleteSession = (sessionId) => {
     }
   })
 
-  //
   return {
     deleteSession: mutate,
     ...rest
