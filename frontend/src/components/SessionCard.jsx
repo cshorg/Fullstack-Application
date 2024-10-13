@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { Badge, Box, Button, Flex, Text } from '@chakra-ui/react'
 import useDeleteSession from '../hooks/useDeleteSession'
 
 const SessionCard = ({ session }) => {
@@ -11,7 +11,9 @@ const SessionCard = ({ session }) => {
       <Box flex={1}>
         <Text fontWeight='bold' fontSize='sm' mb={1}>
           {new Date(createdAt).toLocaleString('en-US')}
-          {isCurrent && ' - (current session)'}
+          <Badge mx={'4'} variant={'subtle'}>
+            {isCurrent && 'current session'}
+          </Badge>
         </Text>
         <Text color='gray.500' fontSize='xs'>
           {userAgent}

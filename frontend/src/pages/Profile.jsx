@@ -7,7 +7,7 @@ const Profile = () => {
 
   return (
     <Center mt={16} flexDir='column'>
-      <Heading mb={4}>My Account</Heading>
+      <Heading mb={2}>My Account</Heading>
       {!verified && (
         <Alert status='warning' w='fit-content' borderRadius={12} mb={3}>
           <AlertIcon />
@@ -26,6 +26,8 @@ const Profile = () => {
           {new Date(createdAt).toLocaleDateString('en-US')}
         </Text>
       </Text>
+
+      <Heading my={4}>My Posts</Heading>
     </Center>
   )
 }
