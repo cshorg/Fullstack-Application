@@ -36,6 +36,7 @@ type CreateAccountParams = {
   password: string
   userAgent?: string
 }
+
 export const createAccount = async (data: CreateAccountParams) => {
   // verify email is not taken
   const existingUser = await UserModel.exists({
@@ -93,6 +94,7 @@ type LoginParams = {
   password: string
   userAgent?: string
 }
+
 export const loginUser = async ({
   email,
   password,
