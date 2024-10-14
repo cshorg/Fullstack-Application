@@ -5,18 +5,32 @@ import {
   UNAUTHORIZED,
   CONFLICT
 } from '../constants/http'
-import PostModel from '../models/post.model'
+import PostModel, { PostDocument } from '../models/post.model'
 import appAssert from '../utils/appAssert'
 import catchErrors from '../utils/catchErrors'
 import { postSchema } from './post.schemas'
 
 // public route for home page posts
 export const getPostsHandler = catchErrors(async (req, res) => {
-  // only grab data needed
-  const posts = await PostModel.find().sort({ createdAt: -1 })
-  appAssert(posts, NOT_FOUND, 'There are currently no posts')
+  // only returning data needed on frontend sorted in desc by createdAt.
+  const posts = await PostModel.find(
+    {},
+    {
+      title: 1,
+      content: 1,
+      votes: 1,
+      createdAt: 1
+    }
+  ).sort({ createdAt: -1 })
+  appAssert(posts.length > 0, NOT_FOUND, 'There are currently no posts')
 
-  return res.status(OK).json(posts)
+  // instead of returning array of userIds from votes, just return length to reduce bandwidth
+  return res.status(OK).json(
+    posts.map((post: PostDocument) => ({
+      ...post.toObject(),
+      votes: post.votes.length
+    }))
+  )
 })
 
 export const createPostsHandler = catchErrors(async (req, res) => {
