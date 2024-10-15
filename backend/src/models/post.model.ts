@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import { thirtyDaysFromNow } from '../utils/date'
 
 export interface PostDocument extends mongoose.Document {
   userId: mongoose.Types.ObjectId
@@ -31,11 +30,6 @@ const postSchema = new mongoose.Schema<PostDocument>({
     type: Date,
     required: true,
     default: Date.now
-  },
-  expiresAt: {
-    type: Date,
-    required: true,
-    default: thirtyDaysFromNow
   }
 })
 

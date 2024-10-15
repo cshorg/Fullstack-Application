@@ -1,9 +1,10 @@
 import { Alert, AlertIcon, Center, Heading, Text } from '@chakra-ui/react'
 import useAuth from '../hooks/useAuth'
+import { useEffect } from 'react'
 
 const Profile = () => {
   const { user } = useAuth()
-  const { email, verified, createdAt } = user
+  const { email, verified, createdAt } = user.user
 
   return (
     <Center mt={16} flexDir='column'>
@@ -28,6 +29,14 @@ const Profile = () => {
       </Text>
 
       <Heading my={4}>My Posts</Heading>
+      {user.posts.length > 0 ? (
+        <Text></Text>
+      ) : (
+        <Alert status='info' w='fit-content' borderRadius={12} mb={3}>
+          <AlertIcon />
+          You have no posts
+        </Alert>
+      )}
     </Center>
   )
 }

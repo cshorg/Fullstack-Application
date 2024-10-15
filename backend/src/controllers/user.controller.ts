@@ -1,4 +1,5 @@
 import { NOT_FOUND, OK } from '../constants/http'
+import PostModel from '../models/post.model'
 import UserModel from '../models/user.model'
 import appAssert from '../utils/appAssert'
 import catchErrors from '../utils/catchErrors'
@@ -6,5 +7,21 @@ import catchErrors from '../utils/catchErrors'
 export const getUserHandler = catchErrors(async (req, res) => {
   const user = await UserModel.findById(req.userId)
   appAssert(user, NOT_FOUND, 'User not found')
-  return res.status(OK).json(user.omitPassword())
+
+  const userPosts = await PostModel.find(
+    {
+      userId: req.userId
+    },
+    {
+      title: 1,
+      content: 1,
+      votes: 1,
+      createdAt: 1
+    },
+    {
+      sort: { createdAt: -1 }
+    }
+  )
+
+  return res.status(OK).json({ user: user.omitPassword(), posts: userPosts })
 })
