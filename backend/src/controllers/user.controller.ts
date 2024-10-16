@@ -3,6 +3,7 @@ import PostModel from '../models/post.model'
 import UserModel from '../models/user.model'
 import appAssert from '../utils/appAssert'
 import catchErrors from '../utils/catchErrors'
+import { PostDocument } from '../models/post.model'
 
 export const getUserHandler = catchErrors(async (req, res) => {
   const user = await UserModel.findById(req.userId)
@@ -23,5 +24,11 @@ export const getUserHandler = catchErrors(async (req, res) => {
     }
   )
 
-  return res.status(OK).json({ user: user.omitPassword(), posts: userPosts })
+  return res.status(OK).json({
+    user: user.omitPassword(),
+    posts: userPosts.map((post: PostDocument) => ({
+      ...post.toObject(),
+      votes: post.votes.length
+    }))
+  })
 })

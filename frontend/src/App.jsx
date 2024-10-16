@@ -7,6 +7,7 @@ import ResetPassword from './pages/ResetPassword'
 import AppContainer from './components/AppContainer'
 import Profile from './pages/Profile'
 import Settings from './pages/Settings'
+import Posts from './pages/Posts'
 import { setNavigate } from './lib/navigation'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <Routes>
       <Route path='/' element={<AppContainer />}>
         <Route index element={<Profile />} />
+        <Route path='posts' element={<Posts />} />
         <Route path='settings' element={<Settings />} />
       </Route>
       <Route path='/login' element={<Login />} />

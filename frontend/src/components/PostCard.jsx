@@ -1,33 +1,31 @@
-import { Badge, Box, Button, Flex, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
 
-const PostCard = () => {
+const PostCard = ({ title, content, votes, createdAt }) => {
   return (
-    <Flex p={4} borderWidth='1px' borderRadius='md'>
+    <Flex p={4} borderWidth='1px' maxWidth={'600px'} borderRadius='md'>
       <Box flex={1}>
         <Text fontWeight='bold' fontSize='sm' mb={1}>
-          {new Date(createdAt).toLocaleString('en-US')}
-          <Badge mx={'4'} variant={'subtle'}>
-            {isCurrent && 'current session'}
-          </Badge>
+          {title}
         </Text>
         <Text color='gray.500' fontSize='xs'>
-          {userAgent}
+          {content}
+        </Text>
+        <Text fontWeight='bold' fontSize='sm' mt={1}>
+          Votes: {votes}
         </Text>
       </Box>
-      {/* {!isCurrent && (
+
       <Button
+        mx={2}
         size='sm'
         alignSelf={'center'}
         color={'red.400'}
         variant='ghost'
-        onClick={deleteSession}
-        isLoading={isPending}
       >
         <Text fontSize={'xl'} mb={'1'}>
           &times;
         </Text>
       </Button>
-    )} */}
     </Flex>
   )
 }
