@@ -11,18 +11,18 @@ const UserMenu = () => {
     mutationFn: logout,
     onSettled: () => {
       queryClient.clear()
-      navigate('/login', { replace: true })
+      navigate('/', { replace: true })
     }
   })
 
   return (
-    <Menu isLazy placement={'right-start'}>
-      <MenuButton position={'absolute'} left={'1.5rem'} bottom={'1.5rem'}>
-        <Avatar src='#' />
+    <Menu isLazy placement={'bottom-start'}>
+      <MenuButton left={'1.5rem'} bottom={'1.5rem'}>
+        <Avatar src='#' size={'sm'} />
       </MenuButton>
       <MenuList>
-        <MenuItem onClick={() => navigate('/')}>Profile</MenuItem>
         <MenuItem onClick={() => navigate('/posts')}>Posts</MenuItem>
+        <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
         <MenuItem onClick={() => navigate('/settings')}>Settings</MenuItem>
         <MenuItem onClick={signOut}>Logout</MenuItem>
       </MenuList>

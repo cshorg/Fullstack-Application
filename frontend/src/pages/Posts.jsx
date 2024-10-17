@@ -1,16 +1,18 @@
-import { Alert, AlertIcon, Center, Heading, Text, Flex } from '@chakra-ui/react'
+import { Container, Heading, VStack } from '@chakra-ui/react'
 import useAuth from '../hooks/useAuth'
 import PostCard from '../components/PostCard'
 
 const Posts = () => {
-  const { user } = useAuth()
+  const { user, isPending, isError, isSuccess } = useAuth()
   const posts = user.posts
 
   return (
-    <Center mt={16} flexDir='column'>
-      <Heading my={4}>My Posts</Heading>
-      {posts.length > 0 ? (
-        <Flex flexDir={'column'} gap={4}>
+    <Container mt={'16'}>
+      <Heading mb={'6'}>My Posts</Heading>
+      {isPending && <Spinner />}
+      {isError && <Text color={'red.400'}>Failed to get posts.</Text>}
+      {isSuccess && (
+        <VStack spacing={'3'} align={'flex-start'}>
           {posts.map((post, index) => (
             <PostCard
               key={index}
@@ -20,14 +22,9 @@ const Posts = () => {
               createdAt={post.createdAt}
             />
           ))}
-        </Flex>
-      ) : (
-        <Alert status='info' w='fit-content' borderRadius={12} mb={3}>
-          <AlertIcon />
-          You have no posts
-        </Alert>
+        </VStack>
       )}
-    </Center>
+    </Container>
   )
 }
 

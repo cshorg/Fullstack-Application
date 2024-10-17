@@ -1,6 +1,6 @@
-import { Center, Spinner, Box } from '@chakra-ui/react'
-import useAuth from '../hooks/useAuth'
+import { Box, Center, Spinner } from '@chakra-ui/react'
 import { Navigate, Outlet } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 import UserMenu from './UserMenu'
 
 const AppContainer = () => {
@@ -25,5 +25,4 @@ const AppContainer = () => {
     />
   )
 }
-
 export default AppContainer

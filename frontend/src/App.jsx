@@ -17,10 +17,11 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<AppContainer />}>
-        <Route index element={<Profile />} />
         <Route path='posts' element={<Posts />} />
+        <Route path='profile' element={<Profile />} />
         <Route path='settings' element={<Settings />} />
       </Route>
+
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/email/verify/:code' element={<VerifyEmail />} />

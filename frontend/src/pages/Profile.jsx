@@ -1,6 +1,5 @@
-import { Alert, AlertIcon, Center, Heading, Text, Flex } from '@chakra-ui/react'
+import { Alert, AlertIcon, Center, Heading, Text } from '@chakra-ui/react'
 import useAuth from '../hooks/useAuth'
-import PostCard from '../components/PostCard'
 
 const Profile = () => {
   const { user } = useAuth()
@@ -27,27 +26,6 @@ const Profile = () => {
           {new Date(createdAt).toLocaleDateString('en-US')}
         </Text>
       </Text>
-
-      <Heading my={4}>My Posts</Heading>
-
-      {user.posts.length > 0 ? (
-        <Flex flexDir={'column'} gap={4}>
-          {user.posts.map((post, index) => (
-            <PostCard
-              key={index}
-              title={post.title}
-              content={post.content}
-              votes={post.votes}
-              createdAt={post.createdAt}
-            />
-          ))}
-        </Flex>
-      ) : (
-        <Alert status='info' w='fit-content' borderRadius={12} mb={3}>
-          <AlertIcon />
-          You have no posts
-        </Alert>
-      )}
     </Center>
   )
 }
