@@ -9,6 +9,7 @@ const Home = () => {
 
   return (
     <Container mt={'16'}>
+      <Heading mb={'6'}>Feed</Heading>
       <CreatePost />
       {isPending && <Spinner />}
       {isError && <Text color={'red.400'}>Failed to get posts.</Text>}
@@ -17,6 +18,7 @@ const Home = () => {
           {posts.map((post, index) => (
             <PostCard
               key={index}
+              id={user.user._id}
               title={post.title}
               content={post.content}
               votes={post.votes}

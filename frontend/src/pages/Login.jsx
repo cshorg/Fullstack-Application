@@ -9,19 +9,24 @@ import {
   Stack,
   Button,
   Text,
-  Link as ChakraLink
+  Center,
+  Link as ChakraLink,
+  Divider
 } from '@chakra-ui/react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { login } from '../lib/api'
 
+import { FcGoogle } from 'react-icons/fc'
+import { SiLinkedin } from 'react-icons/si'
+
 const Login = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const redirectUrl = location.state?.redirectUrl || '/'
+  const redirectUrl = location.state?.redirectUrl || '/home'
 
   const {
     mutate: signIn,
@@ -82,13 +87,42 @@ const Login = () => {
               Forgot password?
             </ChakraLink>
             <Button
-              my={2}
+              mt={2}
               isLoading={isPending}
               isDisabled={!email || password.length < 6}
               onClick={() => signIn({ email, password })}
             >
               Sign in
             </Button>
+
+            <Divider />
+
+            <Flex flexDir={'column'} gap={2}>
+              <Button
+                w={'full'}
+                maxW={'md'}
+                variant={'outline'}
+                leftIcon={<FcGoogle />}
+              >
+                <Center>
+                  <Text>Continute with Google</Text>
+                </Center>
+              </Button>
+
+              <Button
+                w={'full'}
+                maxW={'md'}
+                colorScheme={'messenger'}
+                leftIcon={<SiLinkedin />}
+              >
+                <Center>
+                  <Text>Contiue with Linkedin</Text>
+                </Center>
+              </Button>
+            </Flex>
+
+            <Divider />
+
             <Text align='center' fontSize='sm' color='text.muted'>
               Don&apos;t have an account?{' '}
               <ChakraLink as={Link} to='/register'>

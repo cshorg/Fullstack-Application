@@ -1,10 +1,15 @@
 import { Container, Heading, VStack } from '@chakra-ui/react'
 import useAuth from '../hooks/useAuth'
 import PostCard from '../components/PostCard'
+import { useEffect } from 'react'
 
 const Posts = () => {
   const { user, isPending, isError, isSuccess } = useAuth()
   const posts = user.posts
+
+  useEffect(() => {
+    console.log(posts)
+  })
 
   return (
     <Container mt={'16'}>
@@ -15,6 +20,8 @@ const Posts = () => {
         <VStack spacing={'3'} align={'flex-start'}>
           {posts.map((post, index) => (
             <PostCard
+              id={user.user._id}
+              postId={post._id}
               key={index}
               title={post.title}
               content={post.content}

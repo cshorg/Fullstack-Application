@@ -11,7 +11,7 @@ const AppContainer = () => {
       <Spinner mb={4} />
     </Center>
   ) : user ? (
-    <Box p={5} minH='100vh'>
+    <Box p={4} minH='100vh'>
       <UserMenu />
       <Outlet />
     </Box>
