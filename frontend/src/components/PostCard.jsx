@@ -1,12 +1,21 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { getTimeDifference } from '../lib/time'
+import { FaRegComment, FaRegHeart, FaHeart } from 'react-icons/fa'
 
-const PostCard = ({ title, content, votes, createdAt }) => {
+const PostCard = ({ title, content, votes, createdAt, owner }) => {
+  const createdAtFormated = getTimeDifference(createdAt)
+
   return (
     <Flex p={3} borderWidth='1px' borderRadius='md'>
       <Box flex={1}>
-        <Text fontWeight='bold' fontSize='lg'>
-          {title}
-        </Text>
+        <Flex align={'center'} gap={3}>
+          <Text fontWeight='bold' fontSize='lg'>
+            {title}
+          </Text>
+          <Text color='gray.500' fontSize='xs'>
+            {createdAtFormated}
+          </Text>
+        </Flex>
         <Text fontSize='sm' mb={1}>
           {content}
         </Text>
@@ -17,29 +26,38 @@ const PostCard = ({ title, content, votes, createdAt }) => {
           justify={'space-between'}
           gap={4}
         >
-          <Flex flexDir='column'>
-            <Text color='gray.500' fontSize='xs' mb={1}>
-              Upvotes: {votes}
-            </Text>
-            <Text color='gray.500' fontSize='xs'>
-              {new Date(createdAt).toLocaleString('en-US')}
-            </Text>
+          <Flex
+            flexDir='row'
+            gap={4}
+            color='gray.500'
+            fontSize='sm'
+            align={'center'}
+          >
+            <Flex align={'center'} gap={1.5}>
+              <FaRegHeart />
+              <Text>{votes}</Text>
+            </Flex>
+            <Flex align={'center'} gap={1.5}>
+              <FaRegComment />
+              <Text>0</Text>
+            </Flex>
           </Flex>
-
-          <Flex align='center' gap={2}>
-            <Button size='sm' variant='outline'>
-              Edit
-            </Button>
-            <Button
-              size='sm'
-              bg='red.400'
-              _hover={{ bg: 'red.500' }}
-              _active={{ bg: 'red.600' }}
-              color='white'
-            >
-              Remove
-            </Button>
-          </Flex>
+          {owner && (
+            <Flex align='center' gap={2}>
+              <Button size='sm' variant='outline'>
+                Edit
+              </Button>
+              <Button
+                size='sm'
+                bg='red.400'
+                _hover={{ bg: 'red.500' }}
+                _active={{ bg: 'red.600' }}
+                color='white'
+              >
+                Remove
+              </Button>
+            </Flex>
+          )}
         </Flex>
       </Box>
       {/* {!isCurrent && (

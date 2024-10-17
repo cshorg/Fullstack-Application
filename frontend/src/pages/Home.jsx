@@ -1,14 +1,15 @@
 import { Container, Heading, VStack } from '@chakra-ui/react'
 import useAuth from '../hooks/useAuth'
 import PostCard from '../components/PostCard'
+import CreatePost from '../components/CreatePost'
 
-const Posts = () => {
+const Home = () => {
   const { user, isPending, isError, isSuccess } = useAuth()
   const posts = user.posts
 
   return (
     <Container mt={'16'}>
-      <Heading mb={'6'}>My Posts</Heading>
+      <CreatePost />
       {isPending && <Spinner />}
       {isError && <Text color={'red.400'}>Failed to get posts.</Text>}
       {isSuccess && (
@@ -20,7 +21,7 @@ const Posts = () => {
               content={post.content}
               votes={post.votes}
               createdAt={post.createdAt}
-              owner={true}
+              owner={false}
             />
           ))}
         </VStack>
@@ -29,4 +30,4 @@ const Posts = () => {
   )
 }
 
-export default Posts
+export default Home

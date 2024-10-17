@@ -8,6 +8,7 @@ import AppContainer from './components/AppContainer'
 import Profile from './pages/Profile'
 import Settings from './pages/Settings'
 import Posts from './pages/Posts'
+import Home from './pages/Home'
 import { setNavigate } from './lib/navigation'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<AppContainer />}>
+        <Route path='home' element={<Home />} />
         <Route path='posts' element={<Posts />} />
         <Route path='profile' element={<Profile />} />
         <Route path='settings' element={<Settings />} />
