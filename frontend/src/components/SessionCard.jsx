@@ -1,4 +1,5 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react'
+import { IoClose } from 'react-icons/io5'
 import useDeleteSession from '../hooks/useDeleteSession'
 
 const SessionCard = ({ session }) => {
@@ -7,7 +8,7 @@ const SessionCard = ({ session }) => {
   const { deleteSession, isPending } = useDeleteSession(_id)
 
   return (
-    <Flex p={3} borderWidth='1px' borderRadius='md'>
+    <Flex p={3} borderWidth='1px' minW={'full'} borderRadius='md'>
       <Box flex={1}>
         <Text fontWeight='bold' fontSize='sm' mb={1}>
           {new Date(createdAt).toLocaleString('en-US')}
@@ -23,13 +24,13 @@ const SessionCard = ({ session }) => {
           variant='ghost'
           ml={4}
           alignSelf='center'
-          fontSize='xl'
+          fontSize='sm'
           color='red.400'
           title='Delete Session'
           onClick={deleteSession}
           isLoading={isPending}
         >
-          &times;
+          <IoClose size={20} />
         </Button>
       )}
     </Flex>

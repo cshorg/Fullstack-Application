@@ -13,3 +13,7 @@ export const resetPassword = async ({ verificationCode, password }) =>
 export const getUser = async () => API.get('/user')
 export const getSessions = async () => API.get('/sessions')
 export const deleteSession = async (id) => API.delete(`/sessions/${id}`)
+
+export const getPosts = async () => API.get('/posts')
+export const createPost = async (data) => API.post('/post/create', data)
+export const deletePost = async (id) => API.delete(`/post/remove/${id}`)

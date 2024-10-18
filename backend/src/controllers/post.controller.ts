@@ -16,6 +16,7 @@ export const getPostsHandler = catchErrors(async (req, res) => {
   const posts = await PostModel.find(
     {},
     {
+      userId: 1,
       title: 1,
       content: 1,
       votes: 1,
@@ -45,7 +46,9 @@ export const createPostsHandler = catchErrors(async (req, res) => {
   })
   appAssert(newPost, BAD_REQUEST, 'Post could not be created')
 
-  return res.status(OK).json({ message: 'Post successfully created' })
+  return res
+    .status(OK)
+    .json({ message: 'Post successfully created', post: newPost })
 })
 
 export const removePostHandler = catchErrors(async (req, res) => {

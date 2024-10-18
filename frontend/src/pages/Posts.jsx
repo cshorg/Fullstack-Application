@@ -1,35 +1,65 @@
-import { Container, Heading, VStack } from '@chakra-ui/react'
+import {
+  Container,
+  Heading,
+  VStack,
+  Text,
+  Alert,
+  AlertIcon,
+  FormControl,
+  Input,
+  Button,
+  Flex
+} from '@chakra-ui/react'
+import { RiSortDesc, RiSortAsc } from 'react-icons/ri'
+import { RiFireFill, RiFireLine } from 'react-icons/ri'
 import useAuth from '../hooks/useAuth'
 import PostCard from '../components/PostCard'
-import { useEffect } from 'react'
 
 const Posts = () => {
   const { user, isPending, isError, isSuccess } = useAuth()
-  const posts = user.posts
-
-  useEffect(() => {
-    console.log(posts)
-  })
+  const posts = user?.posts
 
   return (
     <Container mt={'16'}>
-      <Heading mb={'6'}>My Posts</Heading>
+      <Heading mb={'4'}>My Posts</Heading>
+      <FormControl mb={'3'}>
+        <Flex gap={3}>
+          <Input
+            size={'sm'}
+            placeholder='Search your posts by title..'
+            borderRadius='md'
+          />
+          <Button variant={'outline'} fontSize='xl' size={'sm'}>
+            <RiSortAsc />
+          </Button>
+          <Button variant={'outline'} fontSize='xl' size={'sm'}>
+            <RiFireLine />
+          </Button>
+        </Flex>
+      </FormControl>
       {isPending && <Spinner />}
       {isError && <Text color={'red.400'}>Failed to get posts.</Text>}
       {isSuccess && (
         <VStack spacing={'3'} align={'flex-start'}>
-          {posts.map((post, index) => (
-            <PostCard
-              id={user.user._id}
-              postId={post._id}
-              key={index}
-              title={post.title}
-              content={post.content}
-              votes={post.votes}
-              createdAt={post.createdAt}
-              owner={true}
-            />
-          ))}
+          {posts.length > 0 ? (
+            posts.map((post, index) => (
+              <PostCard
+                id={user.user._id}
+                postId={post._id}
+                key={index}
+                title={post.title}
+                content={post.content}
+                votes={post.votes}
+                createdAt={post.createdAt}
+                owner={true}
+              />
+            ))
+          ) : (
+            <Alert status={'info'} borderRadius={12}>
+              <AlertIcon />
+              No posts available.
+            </Alert>
+          )}
         </VStack>
       )}
     </Container>

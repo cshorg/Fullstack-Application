@@ -9,7 +9,7 @@ const Profile = () => {
     <Center mt={16} flexDir='column'>
       <Heading mb={2}>My Account</Heading>
       {!verified && (
-        <Alert status='warning' w='fit-content' borderRadius={12} mb={3}>
+        <Alert status='warning' mt={2} w='fit-content' borderRadius={12} mb={3}>
           <AlertIcon />
           Please verify your email
         </Alert>
