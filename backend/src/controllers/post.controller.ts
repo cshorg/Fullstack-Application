@@ -3,7 +3,8 @@ import {
   OK,
   BAD_REQUEST,
   UNAUTHORIZED,
-  CONFLICT
+  CONFLICT,
+  TOO_MANY_REQUESTS
 } from '../constants/http'
 import PostModel, { PostDocument } from '../models/post.model'
 import appAssert from '../utils/appAssert'
@@ -12,6 +13,7 @@ import { postSchema } from './post.schemas'
 
 // public route for home page posts
 export const getPostsHandler = catchErrors(async (req, res) => {
+  const skip = parseInt(req.query.skip as string) || 0
   // only returning data needed on frontend sorted in desc by createdAt.
   const posts = await PostModel.find(
     {},
@@ -22,7 +24,10 @@ export const getPostsHandler = catchErrors(async (req, res) => {
       votes: 1,
       createdAt: 1
     }
-  ).sort({ createdAt: -1 })
+  )
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(10)
   appAssert(posts.length > 0, NOT_FOUND, 'There are currently no posts')
 
   // instead of returning array of userIds from votes, just return length to reduce bandwidth
@@ -38,6 +43,16 @@ export const createPostsHandler = catchErrors(async (req, res) => {
   const request = postSchema.parse({
     ...req.body
   })
+
+  // Find users latest post and limit the user by 1 minute before next post
+  const lastPost = await PostModel.findOne({ userId: req.userId }).sort({
+    createdAt: -1
+  })
+  appAssert(
+    !(lastPost && Date.now() - new Date(lastPost.createdAt).getTime() < 30000),
+    TOO_MANY_REQUESTS,
+    'Too many requests, please try again in 30 seconds.'
+  )
 
   const newPost = await PostModel.create({
     userId: req.userId,

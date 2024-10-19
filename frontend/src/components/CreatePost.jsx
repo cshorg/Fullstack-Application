@@ -30,6 +30,9 @@ const CreatePost = () => {
       queryClient.setQueryData([POSTS], (cache) => {
         return [data.post, ...(cache || [])]
       })
+
+      setTitle('')
+      setContent('')
     }
   })
 
@@ -38,7 +41,7 @@ const CreatePost = () => {
       {user ? (
         <Stack spacing={3} mb={5}>
           {isError && (
-            <Box mb={3} color='red.400'>
+            <Box mb={2} color='red.400'>
               {error.message}
             </Box>
           )}

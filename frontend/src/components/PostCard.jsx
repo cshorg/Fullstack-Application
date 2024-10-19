@@ -12,7 +12,7 @@ const PostCard = ({ id, postId, title, content, votes, createdAt, owner }) => {
     <Flex p={4} minW={'full'} borderWidth='1px' borderRadius='md'>
       <Box flex={1}>
         <Flex gap={2} mb={1}>
-          <Text color='gray.500' fontSize='xs' width='80px' isTruncated>
+          <Text color='gray.500' fontSize='xs'>
             {id}
           </Text>
           <Text color='gray.500' fontSize='xs'>
@@ -73,7 +73,7 @@ const PostCard = ({ id, postId, title, content, votes, createdAt, owner }) => {
               size='sm'
               variant='outline'
             >
-              Share
+              Share post
             </Button>
             {owner && (
               <>
