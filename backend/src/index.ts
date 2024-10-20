@@ -28,7 +28,7 @@ app.use(cookieParser())
 // health check
 app.get('/', (_, res) => {
   return res.status(200).json({
-    status: 'healthy'
+    status: 'healthy!'
   })
 })
 
