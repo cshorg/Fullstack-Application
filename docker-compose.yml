@@ -21,8 +21,6 @@ services:
       - /app/node_modules
     networks:
       - fullstack-app
-    ports:
-      - 4004:4004
     depends_on:
       - mongo
 
@@ -42,13 +40,28 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
       - VITE_USE_POLLING=true
-    ports:
-      - 5173:5173
     depends_on:
       - api
 
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - fullstack-app
+    depends_on:
+      - api
+      - frontend
+
 volumes:
   mongo_data:
+  caddy_data:
+  caddy_config:
 networks:
   fullstack-app:
     driver: bridge
