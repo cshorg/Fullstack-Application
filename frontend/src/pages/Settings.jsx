@@ -7,7 +7,7 @@ const Settings = () => {
 
   return (
     <Container mt={'16'}>
-      <Heading mb={'6'}>My Sessions!!</Heading>
+      <Heading mb={'6'}>My Sessions</Heading>
       {isPending && <Spinner />}
       {isError && <Text color={'red.400'}>Failed to get sessions.</Text>}
       {isSuccess && (

@@ -8,8 +8,10 @@ import {
   FormControl,
   Input,
   Button,
-  Flex
+  Flex,
+  Link as ChakraLink
 } from '@chakra-ui/react'
+import { Link } from '@chakra-ui/react'
 import { RiSortDesc, RiSortAsc } from 'react-icons/ri'
 import { RiFireFill, RiFireLine } from 'react-icons/ri'
 import useAuth from '../hooks/useAuth'
@@ -55,9 +57,13 @@ const Posts = () => {
               />
             ))
           ) : (
-            <Alert status={'info'} borderRadius={12}>
+            <Alert status={'info'} borderRadius={12} w='fit-content'>
               <AlertIcon />
-              No posts available.
+              You have no posts,
+              <ChakraLink as={Link} to={'/'} mx={1}>
+                create
+              </ChakraLink>
+              your first post.
             </Alert>
           )}
         </VStack>
