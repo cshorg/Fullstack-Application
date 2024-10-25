@@ -28,7 +28,7 @@ app.use(cookieParser())
 // health check
 app.get('/', (_, res) => {
   return res.status(200).json({
-    status: 'healthy!'
+    status: 'healthy'
   })
 })
 
@@ -48,3 +48,5 @@ app.listen(PORT, async () => {
   console.log(`Server listening on port ${PORT} in ${NODE_ENV} environment`)
   await connectToDatabase()
 })
+
+export default app

@@ -13,7 +13,6 @@ import { postSchema } from './post.schemas'
 
 // public route for home page posts
 export const getPostsHandler = catchErrors(async (req, res) => {
-  const skip = parseInt(req.query.skip as string) || 0
   // only returning data needed on frontend sorted in desc by createdAt.
   const posts = await PostModel.find(
     {},
@@ -24,10 +23,7 @@ export const getPostsHandler = catchErrors(async (req, res) => {
       votes: 1,
       createdAt: 1
     }
-  )
-    .sort({ createdAt: -1 })
-    .skip(skip)
-    .limit(10)
+  ).sort({ createdAt: -1 })
   appAssert(posts.length > 0, NOT_FOUND, 'There are currently no posts')
 
   // instead of returning array of userIds from votes, just return length to reduce bandwidth

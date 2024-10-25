@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "jest --coverage --forceExit",
     "dev": "ts-node-dev --poll --files src/index.ts index.d.ts",
     "start": "node index.js",
     "build": "tsc && cp ./package.json ./dist"
@@ -27,8 +28,14 @@
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.6.3"
   }
 }
