@@ -8,8 +8,8 @@ import authenticate from './middleware/authenticate'
 import authRoutes from './routes/auth.route'
 import userRoutes from './routes/user.route'
 import sessionRoutes from './routes/session.route'
-import { APP_ORIGIN, NODE_ENV, PORT } from './constants/env'
 import postRoutes from './routes/post.route'
+import { APP_ORIGIN, NODE_ENV, PORT } from './constants/env'
 import { getPostsHandler } from './controllers/post.controller'
 
 const app = express()
@@ -44,9 +44,9 @@ app.use('/post', authenticate, postRoutes)
 // error handler
 app.use(errorHandler)
 
-app.listen(PORT, async () => {
+const server = app.listen(PORT, async () => {
   console.log(`Server listening on port ${PORT} in ${NODE_ENV} environment`)
   await connectToDatabase()
 })
 
-export default app
+export { app, server }

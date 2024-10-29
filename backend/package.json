@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage --forceExit",
+    "test": "jest --coverage --forceExit --detectOpenHandles",
     "dev": "ts-node-dev --poll --files src/index.ts index.d.ts",
     "start": "node index.js",
     "build": "tsc && cp ./package.json ./dist"

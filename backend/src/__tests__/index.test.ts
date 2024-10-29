@@ -1,8 +1,8 @@
 import request from 'supertest'
-import app from '../index'
+import { app } from '../index'
 
-describe('Check health route', () => {
-  test('Health route', async () => {
+describe('GET /', () => {
+  it('should return status healthy', async () => {
     const res = await request(app).get('/')
     expect(res.body).toEqual({ status: 'healthy' })
   })
